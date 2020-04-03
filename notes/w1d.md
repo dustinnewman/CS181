@@ -55,3 +55,36 @@ stateDiagram
     q5 --> q4: cat
     q4 --> q0: cat
 ```
+
+Let ∑ = {a, b, c}. Create a DFA that decides the language `L = {w = xyz | x ε {a}*, y ε {abc}*, z ε {c}*}`.
+
+Sample input:
+```
+aaa...aabcabcabc...abcccc...c
+^x     ^y             ^z
+```
+
+```mermaid
+x:
+stateDiagram
+    [*] --> q0 %%accepting
+    q0 --> q0: a
+    q0 --> q1: b,c %%rejecting
+    q1 --> q1: a,b,c
+
+y: same thing but swap a and c
+
+z:
+stateDiagram:
+    [*] --> q0 %%accepting
+    q0 --> q1: a %%rejecting
+    q1 --> q2: b %%rejecting
+    q2 --> q0: c %%accepting
+    q1 --> q1: b
+    q1 --> q1: c
+    q2 --> q2: a
+    q2 --> q2: c
+    q0 --> x: b %%rejecting
+    q0 --> x: c %%rejecting
+```
+
