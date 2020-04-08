@@ -40,20 +40,19 @@ i.e. a decision problem is any problem which maps inputs to either a "yes" or a 
     - so, Q - F = rejecting states
 
 ```mermaid
-stateDiagram
-    [*] --> q0 %%accepting
-    q0 --> q1: cat %%accepting
-    q1 --> q2: cat %%accepting
-    q2 --> x: cat %%rejecting
-    x --> x: cat
-    x --> x: dog
-    q2 --> q1: dog
-    q1 --> q0: dog
-    q0 --> q4: dog %%accepting
-    q4 --> q5: dog %%accepting
-    q5 --> x: dog
-    q5 --> q4: cat
-    q4 --> q0: cat
+graph LR
+    q0((q0)) --cat--> q1((cat+1))
+    q1 --cat--> q2((cat+2))
+    q2 --cat--> x
+    x --cat--> x
+    x --dog--> x
+    q2 --dog--> q1
+    q1 --dog--> q0
+    q0 --dog--> q4((dog+1))
+    q4 --dog--> q5((dog+2))
+    q5 --dog--> x
+    q5 --cat--> q4
+    q4 --cat--> q0
 ```
 
 Let ∑ = {a, b, c}. Create a DFA that decides the language `L = {w = xyz | x ε {a}*, y ε {abc}*, z ε {c}*}`.
