@@ -107,8 +107,8 @@ $$
 
 ```mermaid
 graph LR
-    q0--epsilon-->R1
-    q0--epsilon-->R2
+    q0--ε-->R1
+    q0--ε-->R2
 ```
 
 Concatenation of two regular expressions:
@@ -122,7 +122,7 @@ Accept the strings where the first half comes from R<sub>1</sub> and the second 
 ```mermaid
 graph LR
     R1--?-->R1A((R1Accept))
-    R1A--epsilon-->R2
+    R1A--ε-->R2
     R2--?-->R2A((R2Accept))
 ```
 
@@ -136,9 +136,67 @@ Basically, any string accepted by R will also be accepted by R<sup>*</sup>, so w
 
 ```mermaid
 graph LR
-    q0((q0))--epsilon-->R
+    q0((q0))--ε-->R
     R--?-->RAccept((RAccept))
-    RAccept--epsilon-->R
+    RAccept--ε-->R
 ```
 
- 
+## Showing a Language is Not Regular
+
+Let L := {0<sup>n</sup>1<sup>n</sup>|n in N(atural Numbers)}
+
+Claim: L has no FSM.
+
+Proof: 
+
+1. Suppose L has an FSM
+
+2. This FSM has a finite number of states, k
+
+3. Consider the string s := 0<sup>k+1</sup>1<sup>k+1</sup>
+
+4. We have k states
+
+5. Our string s has 2(k+1) = 2k+2 symbols
+
+6. By the :dove: pigeonhole principle :house:, we must have some loop within our FSM, since we have more than k symbols but only k states
+
+7. We can divide our states into "x," "y," and "z"
+   
+   1. "x" precedes the loop
+   
+   2. "y" is the loop
+   
+   3. "z" follows the loop
+
+8. len(xy) <= k+1
+
+9. Per 8, x and y have only 0's (since they are not long enough to get past the 0<sup>k+1</sup>)
+
+10. Since y is a loop, we can remove it and still get an accepted string
+
+11. Therefore, xz is accepted
+
+12. However, xz cannot be in L because xz does not have the same amount of 0's (since y has some amount of 0's)
+
+13. :warning: Contradiction. :warning: (11) and (12).
+
+## Pumping Lemma :bike: :dash:
+
+Let L be a regular language. For this language there exists some number p, called the "pumping length" which we can also think of as the number of states, such that any string w in L can be written as w := xyz
+
+1. xy<sup>i</sup>z in L
+   
+   1. i = 0 means "pump down"
+   
+   2. i > 0 means "pump up"
+
+2. len(y) > 0
+   
+   1. y is essentially our "pump" which we can pump up to "overfill" our string to overwhelm the FSM accepting L
+
+3. len(xy) <= p
+
+You cannot choose one specific partition of w = xyz. Therefore, you must show ALL possible partitions of xyz.
+
+You do select w itself though.
